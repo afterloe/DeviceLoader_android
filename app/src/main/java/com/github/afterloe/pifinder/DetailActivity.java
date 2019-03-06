@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.github.afterloe.pifinder.domain.Device;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DetailActivity extends AppCompatActivity implements Serializable {
@@ -31,7 +32,8 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         }
         TextView ssid = findViewById(R.id.textView2);
         TextView time = findViewById(R.id.textView4);
-        time.setText(new Date().toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        time.setText(simpleDateFormat.format(new Date()));
         ssid.setText(device.getSsid());
         final WebView webView = findViewById(R.id.webView);
         webView.getSettings().setUseWideViewPort(true);
