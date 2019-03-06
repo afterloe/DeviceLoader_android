@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">设备搜索神器</string>
+    <string name="title_repair">一键报修</string>
+    <string name="title_history">设备历史</string>
 </resources>
