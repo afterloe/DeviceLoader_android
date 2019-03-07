@@ -33,7 +33,7 @@ public class DeviceClick implements Serializable, AdapterView.OnItemClickListene
             bundle.putSerializable("object", device);
             detail.putExtras(bundle);
             context.startActivity(detail);
-            ((MainActivity) context ).finish();
+//            ((MainActivity) context ).finish();
         } catch (NullPointerException exception) {
 
         }

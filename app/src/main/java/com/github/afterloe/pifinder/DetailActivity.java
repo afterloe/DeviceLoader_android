@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.github.afterloe.pifinder.domain.Device;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DetailActivity extends AppCompatActivity implements Serializable {
@@ -31,7 +33,8 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         }
         TextView ssid = findViewById(R.id.textView2);
         TextView time = findViewById(R.id.textView4);
-        time.setText(new Date().toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        time.setText(simpleDateFormat.format(new Date()));
         ssid.setText(device.getSsid());
         final WebView webView = findViewById(R.id.webView);
         webView.getSettings().setUseWideViewPort(true);
@@ -45,6 +48,13 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
             }
         });
         webView.loadUrl("https://github.com/afterloe");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.navigation, menu);
+        return true;
     }
 
     @Override
