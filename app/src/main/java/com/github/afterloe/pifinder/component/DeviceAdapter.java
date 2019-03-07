@@ -15,7 +15,7 @@ import com.github.afterloe.pifinder.domain.Device;
 import java.io.Serializable;
 import java.util.List;
 
-public class DeviceAdapter extends ArrayAdapter implements Serializable{
+public class DeviceAdapter extends ArrayAdapter implements Serializable {
 
     private final int resourceId;
 
@@ -26,7 +26,7 @@ public class DeviceAdapter extends ArrayAdapter implements Serializable{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Device device = (Device)getItem(position);
+        Device device = (Device) getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
         ImageView imageView = view.findViewById(R.id.device_status);
         TextView textView = view.findViewById(R.id.device_name);
