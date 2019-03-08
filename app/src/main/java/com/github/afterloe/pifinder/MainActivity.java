@@ -68,9 +68,11 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
     private void initDevice() {
         deviceList = new ArrayList<>();
-        deviceList.add(new Device("device-one-1"));
-        deviceList.add(new Device("device-one-2"));
-        deviceList.add(new Device("device-one-3"));
+        Device device = new Device("大厅2排2座数据终端");
+        device.setSsid("zero");
+        device.setSecret("awdrgy,.23");
+        device.setDataURL("http://cw.cityworks.cn/aw-repository");
+        deviceList.add(device);
     }
 
     @Override

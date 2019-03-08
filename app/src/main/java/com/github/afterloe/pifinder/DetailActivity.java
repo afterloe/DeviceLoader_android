@@ -3,6 +3,7 @@ package com.github.afterloe.pifinder;
 import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.afterloe.pifinder.component.DeviceConn;
 import com.github.afterloe.pifinder.domain.Device;
 
 import java.io.Serializable;
@@ -46,6 +48,12 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_detail);
+
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        DeviceConn conn = new DeviceConn(wifiManager);
+        wifiManager.disconnect();
+
+        // 设置下拉加载
         swipeRefreshLayout = findViewById(R.id.layout_detail);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -57,17 +65,22 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
+        // 获取数据
         Intent intent = getIntent();
         Device device = (Device) intent.getSerializableExtra("object");
         if (null == device) {
             device = new Device("device is not found");
             device.setSsid("ssid not found");
         }
+
+        // 设置activity 设备信息
         TextView ssid = findViewById(R.id.textView2);
         TextView time = findViewById(R.id.textView4);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         time.setText(simpleDateFormat.format(new Date()));
         ssid.setText(device.getSsid());
+
+        // 设置webView
         final WebView webView = findViewById(R.id.webView);
         webView.getSettings().setUseWideViewPort(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -79,7 +92,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
                 }
             }
         });
-        webView.loadUrl("https://github.com/afterloe");
+        webView.loadUrl(device.getDataURL());
     }
 
     @Override
