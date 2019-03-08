@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.navigation, menu);
+        getMenuInflater().inflate(R.menu.setting, menu);
         return true;
     }
 
