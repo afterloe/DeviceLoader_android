@@ -1,8 +1,12 @@
 package com.github.afterloe.pifinder;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.http.SslError;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +15,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -25,10 +30,13 @@ import com.github.afterloe.pifinder.domain.Device;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements Serializable {
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private List<ScanResult> results;
+    private int size = 0;
 
     private Handler handler = new Handler() {
         @Override
@@ -48,17 +56,16 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_detail);
-
-        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        DeviceConn conn = new DeviceConn(wifiManager);
-        wifiManager.disconnect();
+        final Context context = DetailActivity.this;
+        final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        Log.i("detial", wifi.getScanResults().size() + "");
 
         // 设置下拉加载
         swipeRefreshLayout = findViewById(R.id.layout_detail);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(DetailActivity.this, "重新加载... ...", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "重新加载... ...", Toast.LENGTH_LONG).show();
                 handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
             }
         });

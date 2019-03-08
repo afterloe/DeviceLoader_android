@@ -1,5 +1,6 @@
 package com.github.afterloe.pifinder;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -43,10 +44,21 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         }
     };
 
+    private void needPermissions() {
+        String [] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.CHANGE_WIFI_STATE,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.ACCESS_FINE_LOCATION};
+        if (permissions.length != 0) {
+            requestPermissions(permissions, 1);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        needPermissions();
         initDevice(); // 初始化设备数据
         context = MainActivity.this;
         swipeRefreshLayout = findViewById(R.id.list_device);
