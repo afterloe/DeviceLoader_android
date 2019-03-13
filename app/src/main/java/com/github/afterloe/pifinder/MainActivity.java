@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         }
     };
 
+    /**
+     *  申请 wifi读取权限
+     */
     private void needPermissions() {
         String [] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.CHANGE_WIFI_STATE,
