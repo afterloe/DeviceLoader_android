@@ -1,5 +1,6 @@
 package com.github.afterloe.pifinder;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -43,10 +44,24 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         }
     };
 
+    /**
+     *  申请 wifi读取权限
+     */
+    private void needPermissions() {
+        String [] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.CHANGE_WIFI_STATE,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.ACCESS_FINE_LOCATION};
+        if (permissions.length != 0) {
+            requestPermissions(permissions, 1);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        needPermissions();
         initDevice(); // 初始化设备数据
         context = MainActivity.this;
         swipeRefreshLayout = findViewById(R.id.list_device);
@@ -68,9 +83,11 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
     private void initDevice() {
         deviceList = new ArrayList<>();
-        deviceList.add(new Device("device-one-1"));
-        deviceList.add(new Device("device-one-2"));
-        deviceList.add(new Device("device-one-3"));
+        Device device = new Device("大厅2排2座数据终端");
+        device.setSsid("zero");
+        device.setSecret("awdrgy,.23");
+        device.setDataURL("http://cw.cityworks.cn/aw-repository");
+        deviceList.add(device);
     }
 
     @Override
