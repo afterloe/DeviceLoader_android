@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.http.SslError;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,13 +53,27 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         }
     };
 
+    private static final double A_Value=50; /**A - 发射端和接收端相隔1米时的信号强度*/
+    private static final double n_Value=2.77; /** n - 环境衰减因子*/
+
+    public static double getDistance(int rssi){
+        int iRssi = Math.abs(rssi);
+        double power = (iRssi-A_Value)/(10*n_Value);
+        return Math.pow(10,power);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_detail);
         final Context context = DetailActivity.this;
         final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        Log.i("detial", wifi.getScanResults().size() + "");
+        Log.i("rssi leve", 4*(wifi.getConnectionInfo().getRssi()+100)/45 + "");
+        Log.i("rssi distance", getDistance(wifi.getConnectionInfo().getRssi())+ "");
+        Log.i("detail", wifi.getScanResults().size() + "");
+        for (ScanResult config : wifi.getScanResults()) {
+            Log.i("detail -> ", config.SSID + " - " + config.level + " | " + config.capabilities + " | " + config.BSSID + " | " + getDistance(config.level));
+        }
 
         // 设置下拉加载
         swipeRefreshLayout = findViewById(R.id.layout_detail);
