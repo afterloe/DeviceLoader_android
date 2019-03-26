@@ -45,7 +45,7 @@ public class DeviceConn implements Serializable {
         wifiConfiguration.allowedPairwiseCiphers.clear();
         wifiConfiguration.allowedProtocols.clear();
         wifiConfiguration.SSID = "\"" + device.getSsid() + "\"";
-        wifiConfiguration.preSharedKey =  "\"" + device.getSecret() + "\"";
+        wifiConfiguration.preSharedKey =  "\"" + device.getPwd() + "\"";
         wifiConfiguration.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
         wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
         wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);

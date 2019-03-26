@@ -2,6 +2,7 @@ package com.github.afterloe.pifinder;
 
 import android.Manifest;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
+import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.component.DeviceAdapter;
 import com.github.afterloe.pifinder.component.DeviceClick;
 import com.github.afterloe.pifinder.domain.Device;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        needPermissions();
+        needPermissions(); // 申请数据
         initDevice(); // 初始化设备数据
         context = MainActivity.this;
         swipeRefreshLayout = findViewById(R.id.list_device);
@@ -83,11 +84,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
     private void initDevice() {
         deviceList = new ArrayList<>();
-        Device device = new Device("大厅2排2座数据终端");
-        device.setSsid("zero");
-        device.setSecret("awdrgy,.23");
-        device.setDataURL("http://cw.cityworks.cn/aw-repository");
-        deviceList.add(device);
+        new DeviceLoadTask(deviceList, 10, 0).execute();
     }
 
     @Override
@@ -112,16 +109,26 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         }
 
         private void initData() {
-            deviceList.add(new Device("device-one-1"));
-            deviceList.add(new Device("device-one-2"));
-            deviceList.add(new Device("device-one-3"));
-            deviceList.add(new Device("device-one-4"));
-            deviceList.add(new Device("device-one-5"));
-            deviceList.add(new Device("device-one-6"));
-            deviceList.add(new Device("device-one-7"));
-            deviceList.add(new Device("device-one-8"));
-            deviceList.add(new Device("device-one-9"));
-            deviceList.add(new Device("device-one-10"));
+            // TODO
         }
+    }
+}
+
+class DeviceLoadTask extends AsyncTask<Void, Void, List<Device>> {
+
+    private int begin;
+    private int end;
+    private List<Device> devices;
+
+    public DeviceLoadTask(List<Device> devices, int count, int page) {
+        this.begin = count * page;
+        this.end = count;
+        this.devices = devices;
+    }
+
+    @Override
+    protected List<Device> doInBackground(Void... voids) {
+        devices = new DeviceApi().getDeviceList(this.begin, this.end);
+        return devices;
     }
 }

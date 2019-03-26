@@ -31,7 +31,7 @@ public class DeviceAdapter extends ArrayAdapter implements Serializable {
         ImageView imageView = view.findViewById(R.id.device_status);
         TextView textView = view.findViewById(R.id.device_name);
         imageView.setBackgroundResource(R.drawable.ic_inline);
-        textView.setText(device.getDeviceName());
+        textView.setText(device.getName());
         return view;
     }
 

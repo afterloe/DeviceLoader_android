@@ -27,7 +27,7 @@ public class DeviceClick implements Serializable, AdapterView.OnItemClickListene
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         try {
             Device device = (Device) parent.getItemAtPosition(position);
-            Toast.makeText(context, "准备连接 " + device.getDeviceName(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "准备连接 " + device.getName(), Toast.LENGTH_LONG).show();
             Intent detail = new Intent(context, DetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("object", device);

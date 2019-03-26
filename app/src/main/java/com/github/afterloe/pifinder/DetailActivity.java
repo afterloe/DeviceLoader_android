@@ -91,7 +91,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         Intent intent = getIntent();
         Device device = (Device) intent.getSerializableExtra("object");
         if (null == device) {
-            device = new Device("device is not found");
+            device = new Device();
             device.setSsid("ssid not found");
         }
 
@@ -114,7 +114,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
                 }
             }
         });
-        webView.loadUrl(device.getDataURL());
+        webView.loadUrl("https://baidu.com");
     }
 
     @Override

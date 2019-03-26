@@ -14,4 +14,11 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void test_str2Int() {
+        String str = "1.0";
+        Integer val = Double.valueOf(str).intValue();
+        System.out.println(val);
+    }
 }
