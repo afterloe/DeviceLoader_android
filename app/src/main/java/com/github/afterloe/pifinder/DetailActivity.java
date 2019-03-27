@@ -1,14 +1,11 @@
 package com.github.afterloe.pifinder;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.http.SslError;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +22,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.afterloe.pifinder.component.DeviceConn;
+import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.domain.Device;
 
 import java.io.Serializable;
@@ -48,18 +45,43 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
                     if (swipeRefreshLayout.isRefreshing()) {
                         swipeRefreshLayout.setRefreshing(false); // 设置不刷新
                     }
-                    break;
+                break;
             }
         }
     };
 
-    private static final double A_Value=50; /**A - 发射端和接收端相隔1米时的信号强度*/
-    private static final double n_Value=2.77; /** n - 环境衰减因子*/
+    private static final double A_Value = 50; /**A - 发射端和接收端相隔1米时的信号强度*/
+    private static final double n_Value = 2.77; /** n - 环境衰减因子*/
 
+    /**
+     * 估算wifi距离
+     *
+     * @param rssi
+     * @return
+     */
     public static double getDistance(int rssi){
         int iRssi = Math.abs(rssi);
-        double power = (iRssi-A_Value)/(10*n_Value);
-        return Math.pow(10,power);
+        double power = (iRssi - A_Value) / ( 10 * n_Value);
+        return Math.pow(10, power);
+    }
+
+    private void initView() {
+
+    }
+
+    class DetailLoadTask extends AsyncTask<Void, Void, Void> {
+
+        private int id;
+
+        public DetailLoadTask(int id) {
+            this.id = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            return null;
+        }
     }
 
     @Override
@@ -67,8 +89,12 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_detail);
         final Context context = DetailActivity.this;
+
+        initView();
+
+
         final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        Log.i("rssi leve", 4*(wifi.getConnectionInfo().getRssi()+100)/45 + "");
+        Log.i("rssi leve", 4 * ( wifi.getConnectionInfo().getRssi() + 100) / 45 + "");
         Log.i("rssi distance", getDistance(wifi.getConnectionInfo().getRssi())+ "");
         Log.i("detail", wifi.getScanResults().size() + "");
         for (ScanResult config : wifi.getScanResults()) {
@@ -77,12 +103,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
         // 设置下拉加载
         swipeRefreshLayout = findViewById(R.id.layout_detail);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(context, "重新加载... ...", Toast.LENGTH_LONG).show();
-                handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Toast.makeText(context, "重新加载... ...", Toast.LENGTH_LONG).show();
+            handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
         });
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);

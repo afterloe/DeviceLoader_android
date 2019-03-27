@@ -37,9 +37,10 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0x101:
+                    // 设置不刷新
                     if (swipeRefreshLayout.isRefreshing()) {
                         adapter.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false); // 设置不刷新
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                     break;
             }
@@ -99,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         @Override
         protected List<Device> doInBackground(Void... voids) {
             deviceList = new DeviceApi().getDeviceList(this.begin, this.end);
-            Log.i("main", deviceList.toString());
             return deviceList;
         }
 

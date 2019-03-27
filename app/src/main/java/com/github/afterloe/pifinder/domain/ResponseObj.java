@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ResponseObj implements Serializable {
     private Integer code;
-    private Object data;
+    private String data;
     private String msg;
 
     public Integer getCode() {
@@ -15,11 +15,11 @@ public class ResponseObj implements Serializable {
         this.code = code;
     }
 
-    public Object getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(String data) {
         this.data = data;
     }
 
