@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,20 +25,22 @@ import android.widget.Toast;
 
 import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.domain.Device;
+import com.github.afterloe.pifinder.utils.NetworkUtils;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements Serializable {
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private List<ScanResult> results;
+    private WebView webView;
     private TextView deviceName;
     private TextView deviceModifyTime;
     private TextView deviceRemarks;
     private SimpleDateFormat simpleDateFormat;
+    private WifiManager wifi;
+    private WifiConfiguration wifiConfiguration;
 
     private Handler handler = new Handler() {
         @Override
@@ -64,6 +67,16 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             Toast.makeText(context, "更新数据... ...", Toast.LENGTH_LONG).show();
             handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
+            runOnUiThread(() -> {
+                if (wifi.isWifiEnabled()) {
+                    webView.loadUrl("http://cw.cityworks.cn");
+                } else {
+                    int netId = wifi.addNetwork(wifiConfiguration);
+                    wifi.disconnect();
+                    wifi.enableNetwork(netId, true);
+                    wifi.reconnect();
+                }
+            });
         });
         // 设置下拉颜色
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
@@ -88,6 +101,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if (null == fetchDevice) {
+                return ;
+            }
             deviceName.setText(fetchDevice.getName());
             Long modifyTime = fetchDevice.getModifyTime();
             Log.i("detail", modifyTime + "");
@@ -97,6 +113,13 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
             if (null != fetchDevice.getRemark()) {
                 deviceRemarks.setText(fetchDevice.getRemark());
             }
+            wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            wifiConfiguration = NetworkUtils.createWifiConfig(wifi,
+                    fetchDevice.getSsid(), fetchDevice.getPwd(), NetworkUtils.WIFICIPHER_WPA);
+            int netId = wifi.addNetwork(wifiConfiguration);
+            wifi.disconnect();
+            wifi.enableNetwork(netId, true);
+            wifi.reconnect();
         }
     }
 
@@ -104,7 +127,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_detail);
-        final Context context = DetailActivity.this;
+        Context context = DetailActivity.this;
         initView(context);
 
         // 获取数据
@@ -112,24 +135,18 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         Device device = (Device) intent.getSerializableExtra("object");
         new DetailLoadTask(device.getId()).execute();
 
-        final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-//        Log.i("rssi leve", 4 * ( wifi.getConnectionInfo().getRssi() + 100) / 45 + "");
-//        Log.i("rssi distance", getDistance(wifi.getConnectionInfo().getRssi())+ "");
-//        Log.i("detail", wifi.getScanResults().size() + "");
-
         // 设置webView
-        final WebView webView = findViewById(R.id.webView);
+        webView = findViewById(R.id.webView);
         webView.getSettings().setUseWideViewPort(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    webView.getSettings()
-                            .setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+                    webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 }
             }
         });
-        webView.loadUrl("https://baidu.com");
+        webView.loadUrl("http://cw.cityworks.cn");
     }
 
     @Override

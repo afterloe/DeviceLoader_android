@@ -1,10 +1,19 @@
 package com.github.afterloe.pifinder.utils;
 
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
+
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class NetworkUtils implements Serializable {
+
+    public static final int WIFICIPHER_NOPASS = 0;
+    public static final int WIFICIPHER_WEP = 1;
+    public static final int WIFICIPHER_WPA = 2;
+
     /**
      * Convert a IPv4 address from an integer to an InetAddress.
      *
@@ -47,5 +56,55 @@ public class NetworkUtils implements Serializable {
         int iRssi = Math.abs(rssi);
         double power = (iRssi - A_Value) / ( 10 * n_Value);
         return Math.pow(10, power);
+    }
+
+    private static WifiConfiguration isExist(List<WifiConfiguration> result, String ssid) {
+        String fetchSSID = "\"" + ssid + "\"";
+        return result.stream().filter(r -> r.SSID.equals(fetchSSID)).findAny().orElse(null);
+    }
+
+    public static WifiConfiguration createWifiConfig(WifiManager mWifiManager, String ssid, String password, int type) {
+        //初始化WifiConfiguration
+        WifiConfiguration config = new WifiConfiguration();
+        config.allowedAuthAlgorithms.clear();
+        config.allowedGroupCiphers.clear();
+        config.allowedKeyManagement.clear();
+        config.allowedPairwiseCiphers.clear();
+        config.allowedProtocols.clear();
+
+        //指定对应的SSID
+        config.SSID = "\"" + ssid + "\"";
+
+        //如果之前有类似的配置
+        WifiConfiguration tempConfig = isExist(mWifiManager.getConfiguredNetworks(), ssid);
+        if(tempConfig != null) {
+            return tempConfig;
+        }
+
+        //不需要密码的场景
+        if(type == WIFICIPHER_NOPASS) {
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            //以WEP加密的场景
+        } else if(type == WIFICIPHER_WEP) {
+            config.hiddenSSID = true;
+            config.wepKeys[0]= "\""+password+"\"";
+            config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+            config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            config.wepTxKeyIndex = 0;
+            //以WPA加密的场景，自己测试时，发现热点以WPA2建立时，同样可以用这种配置连接
+        } else if(type == WIFICIPHER_WPA) {
+            config.preSharedKey = "\""+password+"\"";
+            config.hiddenSSID = true;
+            config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            config.status = WifiConfiguration.Status.ENABLED;
+        }
+
+        return config;
     }
 }
