@@ -34,8 +34,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<ScanResult> results;
-    private TextView ssid;
-    private TextView time;
+    private TextView deviceName;
+    private TextView deviceModifyTime;
+    private TextView deviceRemakrs;
     private SimpleDateFormat simpleDateFormat;
 
     private Handler handler = new Handler() {
@@ -68,8 +69,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     }
 
     private void initView(Context context) {
-        ssid = findViewById(R.id.textView2);
-        time = findViewById(R.id.textView4);
+        deviceName = findViewById(R.id.device_name);
+        deviceModifyTime = findViewById(R.id.device_modifyTime);
+        deviceRemakrs = findViewById(R.id.device_remarks);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // 设置下拉加载
@@ -100,12 +102,15 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            ssid.setText(fetchDevice.getName());
-            if (null != fetchDevice.getModifyTime()) {
-                time.setText(simpleDateFormat.format(
-                        new Date(fetchDevice.getModifyTime()))
-                );
+            deviceName.setText(fetchDevice.getName());
+            Long modifyTime = fetchDevice.getModifyTime();
+            Log.i("detail", modifyTime + "");
+            if (null != modifyTime && 0 != modifyTime) {
+                deviceModifyTime.setText(simpleDateFormat.format(new Date(modifyTime * 1000)));
+            } else {
+                deviceModifyTime.setText("暂未同步");
             }
+            deviceRemakrs.setText(fetchDevice.getRemark());
         }
     }
 

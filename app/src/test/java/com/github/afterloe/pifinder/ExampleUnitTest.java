@@ -8,6 +8,8 @@ import com.google.gson.reflect.TypeToken;
 
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -48,5 +50,14 @@ public class ExampleUnitTest {
             System.out.println(d.getClass());
         });
         System.out.println(res.getData());
+    }
+
+    @Test
+    public void timeFormat() {
+        Long time = new Long("1553244942");
+        Date now = new Date(time * 1000);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(now);
+        System.out.println(simpleDateFormat.format(now));
     }
 }
