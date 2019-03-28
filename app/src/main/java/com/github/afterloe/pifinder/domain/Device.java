@@ -14,6 +14,7 @@ public class Device implements Serializable {
     private Long createTime;
     private Long modifyTime;
     private Boolean status;
+    private Float distance;
 
     @Override
     public String toString() {
@@ -29,6 +30,14 @@ public class Device implements Serializable {
                 ", modifyTime=" + modifyTime +
                 ", status=" + status +
                 '}';
+    }
+
+    public Float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Float distance) {
+        this.distance = distance;
     }
 
     public Integer getId() {

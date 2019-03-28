@@ -36,7 +36,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     private List<ScanResult> results;
     private TextView deviceName;
     private TextView deviceModifyTime;
-    private TextView deviceRemakrs;
+    private TextView deviceRemarks;
     private SimpleDateFormat simpleDateFormat;
 
     private Handler handler = new Handler() {
@@ -71,15 +71,16 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     private void initView(Context context) {
         deviceName = findViewById(R.id.device_name);
         deviceModifyTime = findViewById(R.id.device_modifyTime);
-        deviceRemakrs = findViewById(R.id.device_remarks);
+        deviceRemarks = findViewById(R.id.device_remarks);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // 设置下拉加载
         swipeRefreshLayout = findViewById(R.id.layout_detail);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            Toast.makeText(context, "重新加载... ...", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "更新数据... ...", Toast.LENGTH_LONG).show();
             handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
         });
+        // 设置下拉颜色
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
     }
@@ -109,7 +110,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
                 deviceModifyTime.setText(simpleDateFormat.format(new Date(modifyTime * 1000)));
             }
             if (null != fetchDevice.getRemark()) {
-                deviceRemakrs.setText(fetchDevice.getRemark());
+                deviceRemarks.setText(fetchDevice.getRemark());
             }
         }
     }

@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     private List<Device> deviceList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayAdapter adapter;
-    private Context context;
     private ListView lv;
 
     private Handler handler = new Handler() {
@@ -63,27 +62,30 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Context context = MainActivity.this;
         needPermissions(); // 申请权限
-        initDevice(); // 初始化设备数据
-        context = MainActivity.this;
+        initView(context); // 初始化视图
+    }
+
+    private void initView(Context context) {
+        deviceList = new ArrayList<>();
         swipeRefreshLayout = findViewById(R.id.list_device);
         lv = findViewById(R.id.lv);
         lv.setOnScrollListener(this);
         adapter = new DeviceAdapter(context, R.layout.device_item, deviceList);
         lv.setAdapter(adapter);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        // 设置下拉动作
         swipeRefreshLayout.setOnRefreshListener(() -> {
             Toast.makeText(context, "正在搜索附近设备... ...", Toast.LENGTH_SHORT).show();
             new DeviceLoadTask(10, 0);
             handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
         });
+        // 设置下拉颜色
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
         lv.setOnItemClickListener(new DeviceClick(context));
-    }
 
-    private void initDevice() {
-        deviceList = new ArrayList<>();
-        new DeviceLoadTask(10, 0).execute();
+        new DeviceLoadTask(10, 0).execute(); // 加载数据
     }
 
     class DeviceLoadTask extends AsyncTask<Void, Void, List<Device>> {
