@@ -2,12 +2,16 @@ package com.github.afterloe.pifinder;
 
 import android.Manifest;
 import android.content.Context;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,6 +21,7 @@ import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.component.DeviceAdapter;
 import com.github.afterloe.pifinder.component.DeviceClick;
 import com.github.afterloe.pifinder.domain.Device;
+import com.github.afterloe.pifinder.utils.NetworkUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,14 +82,13 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         // 设置下拉动作
         swipeRefreshLayout.setOnRefreshListener(() -> {
             Toast.makeText(context, "正在搜索附近设备... ...", Toast.LENGTH_SHORT).show();
-            new DeviceLoadTask(10, 0);
+            new DeviceLoadTask(10, 0).execute();
             handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
         });
         // 设置下拉颜色
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
         lv.setOnItemClickListener(new DeviceClick(context));
-
         new DeviceLoadTask(10, 0).execute(); // 加载数据
     }
 
@@ -107,6 +111,18 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         @Override
         protected void onPostExecute(List<Device> devices) {
             super.onPostExecute(devices);
+            // 可连接 / 不可连接
+//            final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//            List<WifiConfiguration> results = wifi.getConfiguredNetworks();
+//            results.stream().forEach(r -> devices.stream().forEach(d -> {
+//                Log.i("main", r.SSID + " | " + d.getSsid());
+//                if (r.SSID.equals("\"" + d.getSsid() + "\"")) {
+//                    Log.i("main", r.status + " -- >");
+//                    if (r.status == WifiConfiguration.Status.DISABLED) {
+//                        d.setDistance(0.1);
+//                    }
+//                }
+//            }));
             adapter.clear();
             adapter.addAll(deviceList);
         }

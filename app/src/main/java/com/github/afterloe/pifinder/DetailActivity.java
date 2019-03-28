@@ -53,21 +53,6 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         }
     };
 
-    private static final double A_Value = 50; /**A - 发射端和接收端相隔1米时的信号强度*/
-    private static final double n_Value = 2.77; /** n - 环境衰减因子*/
-
-    /**
-     * 估算wifi距离
-     *
-     * @param rssi
-     * @return
-     */
-    public static double getDistance(int rssi){
-        int iRssi = Math.abs(rssi);
-        double power = (iRssi - A_Value) / ( 10 * n_Value);
-        return Math.pow(10, power);
-    }
-
     private void initView(Context context) {
         deviceName = findViewById(R.id.device_name);
         deviceModifyTime = findViewById(R.id.device_modifyTime);
@@ -128,12 +113,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         new DetailLoadTask(device.getId()).execute();
 
         final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        Log.i("rssi leve", 4 * ( wifi.getConnectionInfo().getRssi() + 100) / 45 + "");
-        Log.i("rssi distance", getDistance(wifi.getConnectionInfo().getRssi())+ "");
-        Log.i("detail", wifi.getScanResults().size() + "");
-        for (ScanResult config : wifi.getScanResults()) {
-            Log.i("detail -> ", config.SSID + " - " + config.level + " | " + config.capabilities + " | " + config.BSSID + " | " + getDistance(config.level));
-        }
+//        Log.i("rssi leve", 4 * ( wifi.getConnectionInfo().getRssi() + 100) / 45 + "");
+//        Log.i("rssi distance", getDistance(wifi.getConnectionInfo().getRssi())+ "");
+//        Log.i("detail", wifi.getScanResults().size() + "");
 
         // 设置webView
         final WebView webView = findViewById(R.id.webView);

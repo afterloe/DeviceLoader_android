@@ -14,7 +14,7 @@ public class Device implements Serializable {
     private Long createTime;
     private Long modifyTime;
     private Boolean status;
-    private Float distance;
+    private Double distance;
 
     @Override
     public String toString() {
@@ -32,11 +32,11 @@ public class Device implements Serializable {
                 '}';
     }
 
-    public Float getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(Float distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
