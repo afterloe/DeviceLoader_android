@@ -12,7 +12,7 @@ import okhttp3.Response;
 
 public class DeviceApi extends Api {
 
-    private static final String DEVICE_LIST = BASE_URL + "/v1/list";
+    private static final String DEVICE_LIST = BASE_URL + "/v2/list";
     private static final String DEVICE_DETAIL = BASE_URL + "/v1/device";
 
     public Device getDevice(int id) {

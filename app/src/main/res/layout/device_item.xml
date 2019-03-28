@@ -23,11 +23,10 @@
             android:layout_marginLeft="10dip" />
 
         <TextView
-            android:id="@+id/device_remarks"
+            android:id="@+id/device_position"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="tobe continue"
             android:layout_marginLeft="10dip" />
     </LinearLayout>
 </LinearLayout>

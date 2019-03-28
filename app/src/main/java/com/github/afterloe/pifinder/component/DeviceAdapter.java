@@ -28,10 +28,12 @@ public class DeviceAdapter extends ArrayAdapter implements Serializable {
     public View getView(int position, View convertView, ViewGroup parent) {
         Device device = (Device) getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
-        ImageView imageView = view.findViewById(R.id.device_status);
-        TextView textView = view.findViewById(R.id.device_name);
-        imageView.setBackgroundResource(R.drawable.ic_inline);
-        textView.setText(device.getName());
+        ImageView pic = view.findViewById(R.id.device_status);
+        TextView deviceName = view.findViewById(R.id.device_name);
+        TextView devicePosition = view.findViewById(R.id.device_position);
+        pic.setBackgroundResource(R.drawable.ic_inline);
+        devicePosition.setText(device.getPosition());
+        deviceName.setText(device.getName());
         return view;
     }
 
