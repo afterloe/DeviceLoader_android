@@ -2,9 +2,9 @@ package com.github.afterloe.pifinder.domain;
 
 import java.io.Serializable;
 
-public class ResponseObj implements Serializable {
+public class ResponseObj<T> implements Serializable {
     private Integer code;
-    private String data;
+    private T data;
     private String msg;
 
     public Integer getCode() {
@@ -15,11 +15,11 @@ public class ResponseObj implements Serializable {
         this.code = code;
     }
 
-    public String getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(T data) {
         this.data = data;
     }
 

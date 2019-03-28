@@ -35,14 +35,15 @@ public class DeviceApi extends Api {
 
     public List<Device> getDeviceList(int begin, int end) {
         String fetchUrl = DEVICE_LIST + "?bg=" + begin + "&ed=" + end;
-        ArrayList<Device> devices = new ArrayList<>();
+        List<Device> devices = new ArrayList<>();
         final Request request = new Request.Builder().url(fetchUrl).get().build();
         try {
            Response response = getClient().newCall(request).execute();
-           ResponseObj res = getGson().fromJson(response.body().string(), ResponseObj.class);
+           ResponseObj<List<Device>> res = getGson()
+                   .fromJson(response.body().string()
+                           , new TypeToken<ResponseObj<List<Device>>>(){}.getType());
            if (res.getCode().equals(200)) {
-               devices = getGson().fromJson(res.getData(),
-                       new TypeToken<ArrayList<Device>>(){}.getType());
+               devices = res.getData();
            } else {
                throw new Exception(res.getMsg());
            }
