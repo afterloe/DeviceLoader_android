@@ -1,5 +1,14 @@
 <resources>
-    <string name="app_name">设备搜索神器</string>
-    <string name="title_repair">一键报修</string>
+    <string name="app_name">设备巡检</string>
+    <string name="title_repair">附近设备</string>
     <string name="title_history">设备历史</string>
+    <string name="nav_near">常用设备</string>
+    <string name="nav_history">巡检历史</string>
+    <string name="nav_map">电子地图</string>
+    <string name="device_name">设备名</string>
+    <string name="device_remarks">设备备注</string>
+    <string name="device_modifyTime">上次同步时间</string>
+    <string name="device_remarks_default">未填写备注</string>
+    <string name="device_modifyTime_default">暂未同步</string>
+    <string name="device_distance_default">超出连接范围</string>
 </resources>

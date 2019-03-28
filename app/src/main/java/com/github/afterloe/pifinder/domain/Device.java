@@ -1,55 +1,59 @@
 package com.github.afterloe.pifinder.domain;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Device implements Serializable {
 
-    private String deviceName;
-    private Boolean online;
+    private Integer id;
+    private String uid;
     private String ssid;
-    private String secret;
-    private String dataURL;
-
-    public Device(String deviceName) {
-        this.deviceName = deviceName;
-        this.ssid = "pi@" + deviceName;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Device device = (Device) o;
-        return Objects.equals(deviceName, device.deviceName) &&
-                Objects.equals(online, device.online) &&
-                Objects.equals(ssid, device.ssid) &&
-                Objects.equals(secret, device.secret);
-    }
+    private String pwd;
+    private String name;
+    private String remark;
+    private String position;
+    private Long createTime;
+    private Long modifyTime;
+    private Boolean status;
+    private Double distance;
 
     @Override
-    public int hashCode() {
-        return Objects.hash(deviceName, online, ssid, secret);
+    public String toString() {
+        return "Device{" +
+                "id=" + id +
+                ", uid='" + uid + '\'' +
+                ", ssid='" + ssid + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", name='" + name + '\'' +
+                ", remark='" + remark + '\'' +
+                ", position='" + position + '\'' +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", status=" + status +
+                '}';
     }
 
-    public String getDeviceName() {
-        return deviceName;
+    public Double getDistance() {
+        return distance;
     }
 
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 
-    public Boolean getOnline() {
-        return online;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOnline(Boolean online) {
-        this.online = online;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getSsid() {
@@ -60,19 +64,59 @@ public class Device implements Serializable {
         this.ssid = ssid;
     }
 
-    public String getSecret() {
-        return secret;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setSecret(String secret) {
-        this.secret = secret;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
-    public String getDataURL() {
-        return dataURL;
+    public String getName() {
+        return name;
     }
 
-    public void setDataURL(String dataURL) {
-        this.dataURL = dataURL;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Long modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }
