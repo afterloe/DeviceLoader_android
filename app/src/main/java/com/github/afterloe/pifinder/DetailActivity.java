@@ -34,7 +34,9 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<ScanResult> results;
-    private int size = 0;
+    private TextView ssid;
+    private TextView time;
+    private SimpleDateFormat simpleDateFormat;
 
     private Handler handler = new Handler() {
         @Override
@@ -65,41 +67,10 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         return Math.pow(10, power);
     }
 
-    private void initView() {
-
-    }
-
-    class DetailLoadTask extends AsyncTask<Void, Void, Void> {
-
-        private int id;
-
-        public DetailLoadTask(int id) {
-            this.id = id;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            return null;
-        }
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.device_detail);
-        final Context context = DetailActivity.this;
-
-        initView();
-
-
-        final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        Log.i("rssi leve", 4 * ( wifi.getConnectionInfo().getRssi() + 100) / 45 + "");
-        Log.i("rssi distance", getDistance(wifi.getConnectionInfo().getRssi())+ "");
-        Log.i("detail", wifi.getScanResults().size() + "");
-        for (ScanResult config : wifi.getScanResults()) {
-            Log.i("detail -> ", config.SSID + " - " + config.level + " | " + config.capabilities + " | " + config.BSSID + " | " + getDistance(config.level));
-        }
+    private void initView(Context context) {
+        ssid = findViewById(R.id.textView2);
+        time = findViewById(R.id.textView4);
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // 设置下拉加载
         swipeRefreshLayout = findViewById(R.id.layout_detail);
@@ -109,21 +80,50 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         });
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
+    }
+
+    class DetailLoadTask extends AsyncTask<Void, Void, Void> {
+
+        private int id;
+        private Device fetchDevice;
+
+        public DetailLoadTask(int id) {
+            this.id = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            fetchDevice = new DeviceApi().getDevice(id);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ssid.setText(fetchDevice.getName());
+            time.setText(simpleDateFormat.format(new Date()));
+        }
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.device_detail);
+        final Context context = DetailActivity.this;
+        initView(context);
 
         // 获取数据
         Intent intent = getIntent();
         Device device = (Device) intent.getSerializableExtra("object");
-        if (null == device) {
-            device = new Device();
-            device.setSsid("ssid not found");
-        }
+        new DetailLoadTask(device.getId()).execute();
 
-        // 设置activity 设备信息
-        TextView ssid = findViewById(R.id.textView2);
-        TextView time = findViewById(R.id.textView4);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        time.setText(simpleDateFormat.format(new Date()));
-        ssid.setText(device.getSsid());
+        final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        Log.i("rssi leve", 4 * ( wifi.getConnectionInfo().getRssi() + 100) / 45 + "");
+        Log.i("rssi distance", getDistance(wifi.getConnectionInfo().getRssi())+ "");
+        Log.i("detail", wifi.getScanResults().size() + "");
+        for (ScanResult config : wifi.getScanResults()) {
+            Log.i("detail -> ", config.SSID + " - " + config.level + " | " + config.capabilities + " | " + config.BSSID + " | " + getDistance(config.level));
+        }
 
         // 设置webView
         final WebView webView = findViewById(R.id.webView);
