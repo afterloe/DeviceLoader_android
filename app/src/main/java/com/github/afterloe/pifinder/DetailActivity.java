@@ -101,7 +101,11 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             ssid.setText(fetchDevice.getName());
-            time.setText(simpleDateFormat.format(new Date()));
+            if (null != fetchDevice.getModifyTime()) {
+                time.setText(simpleDateFormat.format(
+                        new Date(fetchDevice.getModifyTime()))
+                );
+            }
         }
     }
 

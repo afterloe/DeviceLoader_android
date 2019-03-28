@@ -11,8 +11,8 @@ public class Device implements Serializable {
     private String name;
     private String remark;
     private String position;
-    private Double createTime;
-    private Double modifyTime;
+    private Long createTime;
+    private Long modifyTime;
     private Boolean status;
 
     @Override
@@ -87,27 +87,27 @@ public class Device implements Serializable {
         this.position = position;
     }
 
-    public Double getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Double createTime) {
-        this.createTime = createTime;
-    }
-
-    public Double getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Double modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
     public Boolean getStatus() {
         return status;
     }
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Long modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }
