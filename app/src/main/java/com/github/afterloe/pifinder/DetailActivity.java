@@ -107,10 +107,10 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
             Log.i("detail", modifyTime + "");
             if (null != modifyTime && 0 != modifyTime) {
                 deviceModifyTime.setText(simpleDateFormat.format(new Date(modifyTime * 1000)));
-            } else {
-                deviceModifyTime.setText("暂未同步");
             }
-            deviceRemakrs.setText(fetchDevice.getRemark());
+            if (null != fetchDevice.getRemark()) {
+                deviceRemakrs.setText(fetchDevice.getRemark());
+            }
         }
     }
 

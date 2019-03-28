@@ -6,4 +6,5 @@
     <string name="device_remarks">设备备注</string>
     <string name="device_modifyTime">上次同步时间</string>
     <string name="device_remarks_default">未填写备注</string>
+    <string name="device_modifyTime_default">暂未同步</string>
 </resources>
