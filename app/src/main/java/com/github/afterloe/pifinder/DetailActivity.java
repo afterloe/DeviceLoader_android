@@ -1,9 +1,9 @@
 package com.github.afterloe.pifinder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -42,6 +42,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     private WifiManager wifi;
     private WifiConfiguration wifiConfiguration;
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -56,6 +57,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         }
     };
 
+    @SuppressLint("SimpleDateFormat")
     private void initView(Context context) {
         deviceName = findViewById(R.id.device_name);
         deviceModifyTime = findViewById(R.id.device_modifyTime);

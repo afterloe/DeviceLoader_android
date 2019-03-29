@@ -1,17 +1,14 @@
 package com.github.afterloe.pifinder;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -21,7 +18,6 @@ import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.component.DeviceAdapter;
 import com.github.afterloe.pifinder.component.DeviceClick;
 import com.github.afterloe.pifinder.domain.Device;
-import com.github.afterloe.pifinder.utils.NetworkUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,8 +28,9 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     private List<Device> deviceList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayAdapter adapter;
-    private ListView lv;
+    private ListView listView;
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -75,10 +72,10 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     private void initView(Context context) {
         deviceList = new ArrayList<>();
         swipeRefreshLayout = findViewById(R.id.list_device);
-        lv = findViewById(R.id.lv);
-        lv.setOnScrollListener(this);
+        listView = findViewById(R.id.lv);
+        listView.setOnScrollListener(this);
         adapter = new DeviceAdapter(context, R.layout.device_item, deviceList);
-        lv.setAdapter(adapter);
+        listView.setAdapter(adapter);
         // 设置下拉动作
         swipeRefreshLayout.setOnRefreshListener(() -> {
             Toast.makeText(context, "正在搜索附近设备... ...", Toast.LENGTH_SHORT).show();
@@ -88,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         // 设置下拉颜色
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        lv.setOnItemClickListener(new DeviceClick(context));
+        listView.setOnItemClickListener(new DeviceClick(context));
         new DeviceLoadTask(10, 0).execute(); // 加载数据
     }
 
