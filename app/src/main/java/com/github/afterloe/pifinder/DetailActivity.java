@@ -115,6 +115,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
             if (null != fetchDevice.getRemark()) {
                 deviceRemarks.setText(fetchDevice.getRemark());
             }
+
             wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             wifiConfiguration = NetworkUtils.createWifiConfig(wifi,
                     fetchDevice.getSsid(), fetchDevice.getPwd(), NetworkUtils.WIFICIPHER_WPA);
