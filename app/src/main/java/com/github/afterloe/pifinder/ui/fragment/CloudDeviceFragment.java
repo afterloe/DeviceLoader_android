@@ -55,7 +55,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main, container, false);
+        View view = inflater.inflate(R.layout.activity_devices, container, false);
         srl_refresh = view.findViewById(R.id.srl_refresh);
         rec_device = view.findViewById(R.id.rec_device);
         fab_top = view.findViewById(R.id.fab_top);
@@ -66,6 +66,9 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
         });
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rec_device.setLayoutManager(layoutManager);
+        // 设置 进度条颜色
+        srl_refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
         rec_device.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {

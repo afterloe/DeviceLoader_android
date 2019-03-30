@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.afterloe.pifinder.R;
-import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.domain.Device;
 import com.github.afterloe.pifinder.utils.NetworkUtils;
 
@@ -97,7 +96,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            fetchDevice = new DeviceApi().getDevice(id);
+//            fetchDevice = new DeviceApi().getDevice(id);
             return null;
         }
 

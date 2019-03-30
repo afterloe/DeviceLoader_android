@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.afterloe.pifinder.R;
-import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.component.DeviceClick;
 import com.github.afterloe.pifinder.domain.Device;
 import com.github.afterloe.pifinder.ui.adapter.DeviceAdapter;
@@ -70,22 +69,22 @@ public class MainListActivity extends AppCompatActivity implements AbsListView.O
     }
 
     private void initView(Context context) {
-        deviceList = new ArrayList<>();
-        swipeRefreshLayout = findViewById(R.id.list_device);
-        ListView listView = findViewById(R.id.lv);
-        listView.setOnScrollListener(this);
-        adapter = new DeviceAdapter(context, R.layout.device_item, deviceList);
-        listView.setAdapter(adapter);
-        // 设置下拉动作
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            Toast.makeText(context, "正在搜索附近设备... ...", Toast.LENGTH_SHORT).show();
-            new DeviceLoadTask(10, 0).execute();
-            handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
-        });
+//        deviceList = new ArrayList<>();
+//        swipeRefreshLayout = findViewById(R.id.list_device);
+//        ListView listView = findViewById(R.id.lv);
+//        listView.setOnScrollListener(this);
+//        adapter = new DeviceAdapter(context, R.layout.device_item, deviceList);
+//        listView.setAdapter(adapter);
+//        // 设置下拉动作
+//        swipeRefreshLayout.setOnRefreshListener(() -> {
+//            Toast.makeText(context, "正在搜索附近设备... ...", Toast.LENGTH_SHORT).show();
+//            new DeviceLoadTask(10, 0).execute();
+//            handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
+//        });
         // 设置下拉颜色
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        listView.setOnItemClickListener(new DeviceClick(context));
+//        listView.setOnItemClickListener(new DeviceClick(context));
         new DeviceLoadTask(10, 0).execute(); // 加载数据
     }
 
@@ -101,7 +100,7 @@ public class MainListActivity extends AppCompatActivity implements AbsListView.O
 
         @Override
         protected List<Device> doInBackground(Void... voids) {
-            deviceList = new DeviceApi().getDeviceList(this.begin, this.end);
+//            deviceList = new DeviceApi().getDeviceList(this.begin, this.end);
             return deviceList;
         }
 
