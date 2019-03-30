@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.api.DeviceApi;
-import com.github.afterloe.pifinder.component.DeviceAdapter;
 import com.github.afterloe.pifinder.component.DeviceClick;
 import com.github.afterloe.pifinder.domain.Device;
+import com.github.afterloe.pifinder.ui.adapter.DeviceAdapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity implements Serializable {
 
     /* 页面逻辑跳转 */
     private void jump() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, ConfigActivity.class));
         finish();
     }
 }

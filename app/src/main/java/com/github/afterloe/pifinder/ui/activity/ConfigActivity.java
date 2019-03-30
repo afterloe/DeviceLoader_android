@@ -12,7 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.github.afterloe.pifinder.DataMoverConstant;
 import com.github.afterloe.pifinder.R;
+import com.github.afterloe.pifinder.ui.fragment.DeviceListFragment;
+import com.github.afterloe.pifinder.utils.PackageUtils;
+import com.github.afterloe.pifinder.utils.ResUtils;
 
 import java.io.Serializable;
 
@@ -23,6 +27,7 @@ public class ConfigActivity extends AppCompatActivity implements Serializable, N
     private DrawerLayout drawer_layout;
     private NavigationView nav_view;
     private TextView tv_nav_title;
+    private ConstraintLayout cly_main_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ public class ConfigActivity extends AppCompatActivity implements Serializable, N
 
     private void initData() {
         mFgManager.beginTransaction().replace(R.id.cly_main_content,
-                LittleSisterFragment.newInstance(), DryConstant.FG_LITTLE_SISTER).commit();
+                DeviceListFragment.newInstance(), DataMoverConstant.FG_LITTLE_SISTER).commit();
         toolbar.setTitle(ResUtils.getString(R.string.menu_see_little_sister));
         String version = PackageUtils.packageName();
         if(version != null) {
