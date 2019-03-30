@@ -1,4 +1,4 @@
-package com.github.afterloe.pifinder;
+package com.github.afterloe.pifinder.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,6 +23,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.domain.Device;
 import com.github.afterloe.pifinder.utils.NetworkUtils;

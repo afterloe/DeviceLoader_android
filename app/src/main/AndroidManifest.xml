@@ -29,12 +29,16 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".DetailActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.github.afterloe.pifinder.MainActivity"/>
+        <activity android:name=".ui.activity.ConfigActivity"
+            android:theme="@style/Theme.Slidr.Slidable" >
+        </activity>
+        <activity android:name=".ui.activity.DetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Slidr.Slidable" >
+        </activity>
+        <activity android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Slidr.Slidable" >
         </activity>
     </application>
 
