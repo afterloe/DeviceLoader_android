@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     private List<Device> deviceList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayAdapter adapter;
-    private ListView listView;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     private void initView(Context context) {
         deviceList = new ArrayList<>();
         swipeRefreshLayout = findViewById(R.id.list_device);
-        listView = findViewById(R.id.lv);
+        ListView listView = findViewById(R.id.lv);
         listView.setOnScrollListener(this);
         adapter = new DeviceAdapter(context, R.layout.device_item, deviceList);
         listView.setAdapter(adapter);

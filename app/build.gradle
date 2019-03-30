@@ -32,8 +32,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
 
-    // 导入okhttp jar包
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.14.0'
-    // 导入gson jar包
-    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.14.0'     // 导入okhttp jar包
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5' // 导入gson jar包
+    implementation group: 'com.jakewharton.timber', name: 'timber', version: '4.7.0' // 日志格式化工具
 }
