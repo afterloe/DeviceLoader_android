@@ -19,23 +19,23 @@ import java.io.Serializable;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public class DeviceListFragment extends Fragment implements Serializable {
+public class DeviceFragment extends Fragment implements Serializable {
 
-    private Context mContext;
-    private TabLayout tl_little_sister;
+    private final String[] mTitles = {"远程设备列表", "电子地图", "附近设备"};
+    private Context context;
+    private TabLayout tl_devices;
     private ViewPager vp_content;
     protected CompositeDisposable mSubscriptions;
 
-    public static DeviceListFragment newInstance() {
-        DeviceListFragment fragment = new DeviceListFragment();
-        return fragment;
+    public static DeviceFragment newInstance() {
+        return new DeviceFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_device_list, container, false);
-        tl_little_sister = view.findViewById(R.id.tl_little_sister);
+        tl_devices = view.findViewById(R.id.tl_devices);
         vp_content = view.findViewById(R.id.vp_content);
         return view;
     }
@@ -43,15 +43,14 @@ public class DeviceListFragment extends Fragment implements Serializable {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mContext = getActivity();
+        context = getActivity();
         mSubscriptions = new CompositeDisposable();
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(this.getChildFragmentManager());
         vp_content.setAdapter(adapter);
-        tl_little_sister.setupWithViewPager(vp_content);
+        tl_devices.setupWithViewPager(vp_content);
     }
 
     private class TabFragmentPagerAdapter extends FragmentPagerAdapter {
-        private final String[] mTitles = {"Gank.io"};
 
         private TabFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -59,7 +58,12 @@ public class DeviceListFragment extends Fragment implements Serializable {
 
         @Override
         public Fragment getItem(int position) {
-            return GankMZFragment.newInstance();
+            // 选择加载 fragment
+            switch (position) {
+                case 0: return CloudDeviceFragment.newInstance();
+                default:
+                    return CloudDeviceFragment.newInstance();
+            }
         }
 
         @Override

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.github.afterloe.pifinder.DataMoverConstant;
 import com.github.afterloe.pifinder.R;
-import com.github.afterloe.pifinder.ui.fragment.DeviceListFragment;
+import com.github.afterloe.pifinder.ui.fragment.DeviceFragment;
 import com.github.afterloe.pifinder.utils.PackageUtils;
 import com.github.afterloe.pifinder.utils.ResUtils;
 
@@ -58,16 +58,17 @@ public class MainActivity extends AppCompatActivity implements Serializable, Nav
 
     private void initData() {
         fgManager.beginTransaction().replace(R.id.cly_main_content,
-                DeviceListFragment.newInstance(), DataMoverConstant.FG_LITTLE_SISTER).commit();
-        toolbar.setTitle(ResUtils.getString(R.string.menu_see_little_sister));
+                DeviceFragment.newInstance(), DataMoverConstant.FG_DEVICE).commit();
+        toolbar.setTitle(ResUtils.getString(R.string.menu_person_task));
         String version = PackageUtils.packageName();
         if(version != null) {
-            String msg = String.format(ResUtils.getString(R.string.menu_drysister_version), version);
+            String msg = String.format(ResUtils.getString(R.string.app_name), version);
             tv_nav_title.setText(msg);
         }
     }
 
     @Override
+    // 选择native 中的 项目 实现切换fragment
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //        switch (item.getItemId()) {
 //            case R.id.nav_see_little_sister:

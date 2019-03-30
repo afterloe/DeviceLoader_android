@@ -63,7 +63,7 @@ public class MainListActivity extends AppCompatActivity implements AbsListView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_item);
+        setContentView(R.layout.activity_devices);
         Context context = MainListActivity.this;
         needPermissions(); // 申请权限
         initView(context); // 初始化视图

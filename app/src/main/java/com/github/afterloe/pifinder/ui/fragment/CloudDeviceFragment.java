@@ -9,6 +9,8 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,87 +21,98 @@ import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.domain.Device;
 import com.github.afterloe.pifinder.ui.adapter.DeviceAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public class GankMZFragment extends Fragment {
+/**
+ * 远程设备列表
+ */
+public class CloudDeviceFragment extends Fragment implements Serializable {
 
-    private static final String TAG = "GankMZFragment";
     private SwipeRefreshLayout srl_refresh;
-    private FloatingActionButton fab_top;
-    private RecyclerView rec_mz;
-    private CompositeDisposable mSubscriptions;
-    private DeviceAdapter mAdapter;
-    private static final int PRELOAD_SIZE = 6;
-    private int mCurPage = 1;
-    private ArrayList<Device> mData;
+    private FloatingActionButton fab_top; // 悬浮按钮
+    private RecyclerView rec_device;
+    private CompositeDisposable subscriptions;
+    private DeviceAdapter adapter;
+    private int curPage = 1;
+    private ArrayList<Device> data;
     private final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
 
-    public static GankMZFragment newInstance() {
-        return new GankMZFragment();
+    public static CloudDeviceFragment newInstance() {
+        return new CloudDeviceFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main_item, container, false);
-        srl_refresh = view.findViewById(R.id.list_device);
-//        rec_mz = view.findViewById(R.id.rec_mz);
-//        fab_top = view.findViewById(R.id.fab_top);
-//        srl_refresh.setOnRefreshListener(() -> {
-//            mCurPage = 1;
-//            fetchGankMZ(true);
-//        });
-//        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-//        rec_mz.setLayoutManager(layoutManager);
-//        rec_mz.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {//加载更多
-//                    if (layoutManager.getItemCount() - recyclerView.getChildCount() <= layoutManager.findFirstVisibleItemPosition()) {
-//                        ++mCurPage;
-//                        fetchGankMZ(false);
-//                    }
-//                }
-//                if (layoutManager.findFirstVisibleItemPosition() != 0) {
-//                    fabInAnim();
-//                } else {
-//                    fabOutAnim();
-//                }
-//            }
-//        });
-//        fab_top.setOnClickListener(v -> {
-//            LinearLayoutManager manager = (LinearLayoutManager) rec_mz.getLayoutManager();
-//            //如果超过50项直接跳到开头，不然要滚好久
-//            if(manager.findFirstVisibleItemPosition() < 50) {
-//                rec_mz.smoothScrollToPosition(0);
-//            } else {
-//                rec_mz.scrollToPosition(0);
-//                fabOutAnim();
-//            }
-//        });
+        View view = inflater.inflate(R.layout.activity_main, container, false);
+        srl_refresh = view.findViewById(R.id.srl_refresh);
+        rec_device = view.findViewById(R.id.rec_device);
+        fab_top = view.findViewById(R.id.fab_top);
+
+        srl_refresh.setOnRefreshListener(() -> {
+            curPage = 1;
+//            fetchCloudDevice(true);  // 拉取远程数据
+        });
+        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        rec_device.setLayoutManager(layoutManager);
+        rec_device.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) { // 加载更多
+                    if (layoutManager.getItemCount() - recyclerView.getChildCount() <= layoutManager.findFirstVisibleItemPosition()) {
+                        ++curPage;
+//                        fetchCloudDevice(false); 更新数据
+                    }
+                }
+                if (0 != layoutManager.findFirstVisibleItemPosition()) {
+                    // 显示悬浮按钮
+                    fabShowAnim();
+                } else {
+                    // 隐藏悬浮按钮
+                    fabHiddenAnim();
+                }
+            }
+        });
+        fab_top.setOnClickListener(v -> {
+            LinearLayoutManager manager = (LinearLayoutManager) rec_device.getLayoutManager();
+            if (50 > manager.findFirstVisibleItemPosition()) {
+                rec_device.smoothScrollToPosition(0);
+            } else {
+                rec_device.scrollToPosition(0);
+//                fabHiddenAnim();
+            }
+        });
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSubscriptions = new CompositeDisposable();
-        mData = new ArrayList<>();
-//        mAdapter = new GankMZAdapter(getActivity(), mData);
-//        rec_mz.setAdapter(mAdapter);
+        subscriptions = new CompositeDisposable();
+        data = new ArrayList<>();
+        adapter = new DeviceAdapter(getActivity(), data);
         srl_refresh.setRefreshing(true);
-        fetchGankMZ(true);
+//        fetchCloudDevice(true);  // 拉取远程数据
     }
-
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSubscriptions.clear();
+        subscriptions.clear();
+    }
+
+    /* 悬浮按钮显示动画 */
+    private void fabShowAnim() {
+        if (fab_top.getVisibility() == View.GONE) {
+            fab_top.setVisibility(View.VISIBLE);
+            ViewCompat.animate(fab_top).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
+                    .setInterpolator(INTERPOLATOR).withLayer().setListener(null).start();
+        }
     }
 
     /* 拉取妹子数据 */
@@ -125,17 +138,8 @@ public class GankMZFragment extends Fragment {
 //        mSubscriptions.add(subscribe);
     }
 
-    /* 悬浮按钮显示动画 */
-    private void fabInAnim() {
-        if (fab_top.getVisibility() == View.GONE) {
-            fab_top.setVisibility(View.VISIBLE);
-            ViewCompat.animate(fab_top).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
-                    .setInterpolator(INTERPOLATOR).withLayer().setListener(null).start();
-        }
-    }
-
     /* 悬浮图标隐藏动画 */
-    private void fabOutAnim() {
+    private void fabHiddenAnim() {
         if (fab_top.getVisibility() == View.VISIBLE) {
             ViewCompat.animate(fab_top).scaleX(0.0F).scaleY(0.0F).alpha(0.0F)
                     .setInterpolator(INTERPOLATOR).withLayer().setListener(new ViewPropertyAnimatorListener() {
@@ -156,5 +160,4 @@ public class GankMZFragment extends Fragment {
             }).start();
         }
     }
-
 }

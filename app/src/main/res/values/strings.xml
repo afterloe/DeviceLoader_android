@@ -20,7 +20,7 @@
 
     <!-- 抽屉菜单 -->
     <string name="menu_see">个人中心</string>
-    <string name="menu_see_little_sister">我的任务</string>
+    <string name="menu_person_task">我的任务</string>
     <string name="menu_see_news">我的设备</string>
 
     <string name="menu_else">其他</string>
