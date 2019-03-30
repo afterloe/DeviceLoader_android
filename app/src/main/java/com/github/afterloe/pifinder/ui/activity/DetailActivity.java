@@ -1,4 +1,4 @@
-package com.github.afterloe.pifinder;
+package com.github.afterloe.pifinder.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,7 +23,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.afterloe.pifinder.api.DeviceApi;
+import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.domain.Device;
 import com.github.afterloe.pifinder.utils.NetworkUtils;
 
@@ -96,7 +96,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            fetchDevice = new DeviceApi().getDevice(id);
+//            fetchDevice = new DeviceApi().getDevice(id);
             return null;
         }
 
@@ -163,7 +163,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     public void onBackPressed() {
         super.onBackPressed();
         // 返回键 监听
-        this.startActivity(new Intent(this, MainActivity.class));
+        this.startActivity(new Intent(this, MainListActivity.class));
         this.finish();
     }
 }

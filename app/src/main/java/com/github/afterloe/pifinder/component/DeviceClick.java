@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.github.afterloe.pifinder.DetailActivity;
 import com.github.afterloe.pifinder.domain.Device;
+import com.github.afterloe.pifinder.ui.activity.DetailActivity;
 
 import java.io.Serializable;
 
