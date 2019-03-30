@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
-class DataMover implements Serializable {
+public class DataMover implements Serializable {
 
     private static Long HTTP_CONNECT_TIMEOUT = 5L;
     private static Long HTTP_READ_TIMEOUT = 5L;

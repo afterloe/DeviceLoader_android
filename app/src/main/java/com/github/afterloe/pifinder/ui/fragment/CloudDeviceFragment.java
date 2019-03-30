@@ -18,13 +18,21 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
 import com.github.afterloe.pifinder.R;
+import com.github.afterloe.pifinder.api.ApiService;
 import com.github.afterloe.pifinder.domain.Device;
 import com.github.afterloe.pifinder.ui.adapter.DeviceAdapter;
+import com.github.afterloe.pifinder.utils.NetworkUtils;
+import com.github.afterloe.pifinder.utils.ResUtils;
+import com.github.afterloe.pifinder.utils.ToastUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 远程设备列表
@@ -54,7 +62,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
 
         srl_refresh.setOnRefreshListener(() -> {
             curPage = 1;
-//            fetchCloudDevice(true);  // 拉取远程数据
+            fetchCloudDevice(true);  // 拉取远程数据
         });
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rec_device.setLayoutManager(layoutManager);
@@ -66,7 +74,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) { // 加载更多
                     if (layoutManager.getItemCount() - recyclerView.getChildCount() <= layoutManager.findFirstVisibleItemPosition()) {
                         ++curPage;
-//                        fetchCloudDevice(false); 更新数据
+                        fetchCloudDevice(false); // 更新数据
                     }
                 }
                 if (0 != layoutManager.findFirstVisibleItemPosition()) {
@@ -84,7 +92,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
                 rec_device.smoothScrollToPosition(0);
             } else {
                 rec_device.scrollToPosition(0);
-//                fabHiddenAnim();
+                fabHiddenAnim();
             }
         });
         return view;
@@ -97,7 +105,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
         data = new ArrayList<>();
         adapter = new DeviceAdapter(getActivity(), data);
         srl_refresh.setRefreshing(true);
-//        fetchCloudDevice(true);  // 拉取远程数据
+        fetchCloudDevice(true);  // 拉取远程数据
     }
 
     @Override
@@ -115,29 +123,6 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
         }
     }
 
-    /* 拉取妹子数据 */
-    private void fetchGankMZ(boolean isRefresh) {
-//        Disposable subscribe = APIService.getInstance().apis.fetchGankMZ(20, mCurPage)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe(subscription -> srl_refresh.setRefreshing(true))
-//                .doFinally(() -> srl_refresh.setRefreshing(false))
-//                .subscribe(data -> {
-//                    if(data != null && data.getResults() != null && data.getResults().size() > 0) {
-//                        ArrayList<GankMeizi> results = data.getResults();
-//                        if (isRefresh) {
-//                            mAdapter.addAll(results);
-//                            ToastUtils.shortToast(ResUtils.getString(R.string.refresh_success));
-//                        } else {
-//                            mAdapter.loadMore(results);
-//                            String msg = String.format(ResUtils.getString(R.string.load_more_num),results.size(),"妹子");
-//                            ToastUtils.shortToast(msg);
-//                        }
-//                    }
-//                }, RxSchedulers::processRequestException);
-//        mSubscriptions.add(subscribe);
-    }
-
     /* 悬浮图标隐藏动画 */
     private void fabHiddenAnim() {
         if (fab_top.getVisibility() == View.VISIBLE) {
@@ -145,7 +130,6 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
                     .setInterpolator(INTERPOLATOR).withLayer().setListener(new ViewPropertyAnimatorListener() {
                 @Override
                 public void onAnimationStart(View view) {
-
                 }
 
                 @Override
@@ -159,5 +143,27 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
                 }
             }).start();
         }
+    }
+
+    private void fetchCloudDevice(boolean isRefresh) {
+        Disposable subscribe = ApiService.getInstance().deviceService.fetchDevices((curPage - 1) * 10, 10)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(subscription -> srl_refresh.setRefreshing(true))
+                .doFinally(() -> srl_refresh.setRefreshing(false))
+                .subscribe(data -> {
+                    if (data.getCode().equals(200)) {
+                        List<Device> results = data.getData();
+                        if (isRefresh) {
+                            adapter.addAll(results);
+                            ToastUtils.shortToast(ResUtils.getString(R.string.refresh_success));
+                        } else {
+                            adapter.loadMore(results);
+                            String msg = String.format(ResUtils.getString(R.string.load_more_num), results.size(), "设备");
+                            ToastUtils.shortToast(msg);
+                        }
+                    }
+                }, NetworkUtils::processRequestException);
+        subscriptions.add(subscribe);
     }
 }

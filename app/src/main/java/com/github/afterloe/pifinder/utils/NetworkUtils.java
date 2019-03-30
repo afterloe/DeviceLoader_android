@@ -3,10 +3,21 @@ package com.github.afterloe.pifinder.utils;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 
+import com.github.afterloe.pifinder.R;
+import com.google.gson.JsonSyntaxException;
+
 import java.io.Serializable;
+import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.List;
+
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class NetworkUtils implements Serializable {
 
@@ -106,5 +117,25 @@ public class NetworkUtils implements Serializable {
         }
 
         return config;
+    }
+
+    public static <T> ObservableTransformer<T, T> compose() {
+        return upstream ->
+                upstream.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static void processRequestException(Throwable e) {
+        if(e instanceof ConnectException || e instanceof SocketException) {
+            ToastUtils.shortToast(ResUtils.getString(R.string.network_connected_exception));
+        } else if(e instanceof SocketTimeoutException) {
+            ToastUtils.shortToast(ResUtils.getString(R.string.network_socket_time_out));
+        } else if(e instanceof JsonSyntaxException) {
+            ToastUtils.shortToast(ResUtils.getString(R.string.network_json_syntax_exception));
+        } else if(e instanceof UnknownHostException) {
+            ToastUtils.shortToast(ResUtils.getString(R.string.network_unknown_host));
+        } else {
+            Timber.d(e.getMessage());
+        }
     }
 }

@@ -40,7 +40,7 @@
 
     <!--刷新提示相关-->
     <string name="refresh_success">刷新成功！</string>
-    <string name="load_more_num">嘤嘤嘤，新增%1$d枚%2$s！</string>
+    <string name="load_more_num">加载%1$d台%2$s！</string>
 
     <!--设置相关-->
     <string name="just_load_in_wifi">仅在WIFI下加载图片</string>
