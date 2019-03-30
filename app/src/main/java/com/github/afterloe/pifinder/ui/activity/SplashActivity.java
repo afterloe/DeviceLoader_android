@@ -10,6 +10,11 @@ import com.github.afterloe.pifinder.R;
 
 import java.io.Serializable;
 
+/**
+ * 闪屏
+ *
+ * 显示广告
+ */
 public class SplashActivity extends AppCompatActivity implements Serializable {
 
     @Override
@@ -27,7 +32,7 @@ public class SplashActivity extends AppCompatActivity implements Serializable {
 
     /* 页面逻辑跳转 */
     private void jump() {
-        startActivity(new Intent(this, ConfigActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

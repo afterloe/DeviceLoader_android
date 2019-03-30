@@ -9,8 +9,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +21,7 @@ import com.github.afterloe.pifinder.ui.adapter.DeviceAdapter;
 
 import java.util.ArrayList;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class GankMZFragment extends Fragment {
 
@@ -48,7 +43,7 @@ public class GankMZFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main, container, false);
+        View view = inflater.inflate(R.layout.activity_main_item, container, false);
         srl_refresh = view.findViewById(R.id.list_device);
 //        rec_mz = view.findViewById(R.id.rec_mz);
 //        fab_top = view.findViewById(R.id.fab_top);
@@ -132,11 +127,11 @@ public class GankMZFragment extends Fragment {
 
     /* 悬浮按钮显示动画 */
     private void fabInAnim() {
-//        if (fab_top.getVisibility() == View.GONE) {
-//            fab_top.setVisibility(View.VISIBLE);
-//            ViewCompat.animate(fab_top).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
-//                    .setInterpolator(INTERPOLATOR).withLayer().setListener(null).start();
-//        }
+        if (fab_top.getVisibility() == View.GONE) {
+            fab_top.setVisibility(View.VISIBLE);
+            ViewCompat.animate(fab_top).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
+                    .setInterpolator(INTERPOLATOR).withLayer().setListener(null).start();
+        }
     }
 
     /* 悬浮图标隐藏动画 */

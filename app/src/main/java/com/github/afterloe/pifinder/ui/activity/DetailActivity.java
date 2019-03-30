@@ -164,7 +164,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     public void onBackPressed() {
         super.onBackPressed();
         // 返回键 监听
-        this.startActivity(new Intent(this, MainActivity.class));
+        this.startActivity(new Intent(this, MainListActivity.class));
         this.finish();
     }
 }

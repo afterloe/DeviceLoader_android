@@ -29,14 +29,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ConfigActivity"
-            android:theme="@style/Theme.Slidr.Slidable" >
+        <activity android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".ui.activity.DetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Slidr.Slidable" >
         </activity>
-        <activity android:name=".ui.activity.MainActivity"
+        <activity android:name=".ui.activity.MainListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Slidr.Slidable" >
         </activity>
