@@ -1,6 +1,5 @@
 package com.github.afterloe.pifinder.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -24,7 +23,7 @@ import java.io.Serializable;
 
 public class ConfigActivity extends AppCompatActivity implements Serializable, NavigationView.OnNavigationItemSelectedListener {
 
-    private FragmentManager mFgManager;
+    private FragmentManager fgManager;
     private Toolbar toolbar;
     private DrawerLayout drawer_layout;
     private NavigationView nav_view;
@@ -34,8 +33,8 @@ public class ConfigActivity extends AppCompatActivity implements Serializable, N
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mFgManager = getSupportFragmentManager();
+        setContentView(R.layout.activity_config);
+        fgManager = getSupportFragmentManager();
         initView();
         initData();
     }
@@ -58,7 +57,7 @@ public class ConfigActivity extends AppCompatActivity implements Serializable, N
     }
 
     private void initData() {
-        mFgManager.beginTransaction().replace(R.id.cly_main_content,
+        fgManager.beginTransaction().replace(R.id.cly_main_content,
                 DeviceListFragment.newInstance(), DataMoverConstant.FG_LITTLE_SISTER).commit();
         toolbar.setTitle(ResUtils.getString(R.string.menu_see_little_sister));
         String version = PackageUtils.packageName();
