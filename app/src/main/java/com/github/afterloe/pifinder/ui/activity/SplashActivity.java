@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.github.afterloe.pifinder.MainActivity;
 import com.github.afterloe.pifinder.R;
 
 import java.io.Serializable;

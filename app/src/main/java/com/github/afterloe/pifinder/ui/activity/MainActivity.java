@@ -1,19 +1,20 @@
-package com.github.afterloe.pifinder;
+package com.github.afterloe.pifinder.ui.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.api.DeviceApi;
 import com.github.afterloe.pifinder.component.DeviceAdapter;
 import com.github.afterloe.pifinder.component.DeviceClick;
