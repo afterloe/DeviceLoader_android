@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.github.afterloe.pifinder.ui.activity.DetailActivity;
 
 import java.io.Serializable;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem> implements Serializable  {
 

@@ -1,5 +1,6 @@
 package com.github.afterloe.pifinder.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,6 +34,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * 远程设备列表
@@ -118,6 +120,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
     }
 
     /* 悬浮按钮显示动画 */
+    @SuppressLint("RestrictedApi")
     private void fabShowAnim() {
         if (fab_top.getVisibility() == View.GONE) {
             fab_top.setVisibility(View.VISIBLE);
@@ -135,6 +138,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
                 public void onAnimationStart(View view) {
                 }
 
+                @SuppressLint("RestrictedApi")
                 @Override
                 public void onAnimationEnd(View view) {
                     fab_top.setVisibility(View.GONE);
