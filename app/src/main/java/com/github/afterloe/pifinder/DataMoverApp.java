@@ -14,7 +14,6 @@ public class DataMoverApp extends Application implements Serializable {
         context = this;
         DataMover.initTimber();
         DataMover.initOKHttp();
-        DataMover.initGson();
     }
 
     public static DataMoverApp getContext() {

@@ -11,16 +11,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.github.afterloe.pifinder.R;
-import com.github.afterloe.pifinder.component.DeviceClick;
 import com.github.afterloe.pifinder.domain.Device;
-import com.github.afterloe.pifinder.ui.adapter.DeviceAdapter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainListActivity extends AppCompatActivity implements AbsListView.OnScrollListener, Serializable {

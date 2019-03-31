@@ -14,10 +14,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabGravity="center"
+        app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabIndicatorHeight="2dp"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorPrimaryDark"
         app:tabTextColor="@color/bar_font" />
 

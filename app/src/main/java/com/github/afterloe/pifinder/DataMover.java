@@ -14,7 +14,7 @@ public class DataMover implements Serializable {
     private static Long HTTP_READ_TIMEOUT = 5L;
 
     public static OkHttpClient client;
-    public static GsonBuilder gsonBuilder;
+//    public static GsonBuilder gsonBuilder;
 
     static void initOKHttp() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -24,14 +24,14 @@ public class DataMover implements Serializable {
         client = builder.build();
     }
 
-    static void initGson() {
-        gsonBuilder = new GsonBuilder()
-                .setLenient()// json宽松
-                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
-                .serializeNulls() //智能null
-                .setPrettyPrinting()// 调教格式
-                .disableHtmlEscaping(); //默认是GSON把HTML 转义的
-    }
+//    static void initGson() {
+//        gsonBuilder = new GsonBuilder()
+//                .setLenient()// json宽松
+//                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
+//                .serializeNulls() //智能null
+//                .setPrettyPrinting()// 调教格式
+//                .disableHtmlEscaping(); //默认是GSON把HTML 转义的
+//    }
 
     static void initTimber() {
         if (BuildConfig.DEBUG) {

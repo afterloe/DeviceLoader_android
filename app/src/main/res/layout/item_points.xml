@@ -5,38 +5,30 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/device_status"
+        android:src="@drawable/access_point_24px"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="65dp" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight="0.5"
+        android:layout_weight="0.9"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/device_name"
+            android:id="@+id/point_remark"
+            android:text="@string/point_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
+            android:layout_marginStart="10dip"
             android:layout_marginTop="10dp"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/device_position"
+            android:id="@+id/point_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip" />
+            android:layout_marginStart="10dip" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/device_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/device_distance_default" />
 </LinearLayout>

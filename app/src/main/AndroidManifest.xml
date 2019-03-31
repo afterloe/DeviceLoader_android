@@ -32,11 +32,7 @@
         <activity android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".ui.activity.DetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Slidr.Slidable" >
-        </activity>
-        <activity android:name=".ui.activity.MainListActivity"
+        <activity android:name=".ui.activity.DeviceDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Slidr.Slidable" >
         </activity>
