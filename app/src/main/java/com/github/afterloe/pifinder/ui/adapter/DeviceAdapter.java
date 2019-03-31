@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.domain.Device;
 import com.github.afterloe.pifinder.ui.activity.DetailActivity;
+import com.github.afterloe.pifinder.ui.activity.DeviceDetailActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -80,7 +81,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem
             }
             // bind 监听事件
             view.setOnClickListener(v -> {
-                Intent intent = new Intent(context, DetailActivity.class);
+                Intent intent = new Intent(context, DeviceDetailActivity.class);
                 intent.putExtra("id", device.getId());
                 context.startActivity(intent);
             });

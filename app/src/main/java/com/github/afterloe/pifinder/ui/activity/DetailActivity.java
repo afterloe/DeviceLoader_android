@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // 设置下拉加载
-        swipeRefreshLayout = findViewById(R.id.layout_detail);
+//        swipeRefreshLayout = findViewById(R.id.layout_detail);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             Toast.makeText(context, "更新数据... ...", Toast.LENGTH_LONG).show();
             handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记
@@ -129,7 +129,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.device_detail);
+        setContentView(R.layout.fragment_device_detail);
         Context context = DetailActivity.this;
         initView(context);
 
@@ -139,7 +139,7 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 //        new DetailLoadTask(device.getId()).execute();
 
         // 设置webView
-        webView = findViewById(R.id.webView);
+//        webView = findViewById(R.id.webView);
         webView.getSettings().setUseWideViewPort(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
