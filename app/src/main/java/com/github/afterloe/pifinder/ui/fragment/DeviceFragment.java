@@ -61,6 +61,7 @@ public class DeviceFragment extends Fragment implements Serializable {
             // 选择加载 fragment
             switch (position) {
                 case 0: return CloudDeviceFragment.newInstance();
+                case 1: return NearbyDeviceFragment.newInstance();
                 default:
                     return CloudDeviceFragment.newInstance();
             }
