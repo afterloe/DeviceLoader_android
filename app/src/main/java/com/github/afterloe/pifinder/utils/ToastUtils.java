@@ -6,9 +6,7 @@ import android.widget.Toast;
 import com.github.afterloe.pifinder.DataMoverApp;
 
 /**
- * 描述：Toast 工具类
- *
- * @author CoderPig on 2018/02/14 11:06.
+ *  Toast 工具类
  */
 
 public class ToastUtils {
