@@ -1,6 +1,7 @@
 package com.github.afterloe.pifinder.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,15 +12,15 @@ import android.widget.TextView;
 
 import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.domain.Device;
+import com.github.afterloe.pifinder.ui.activity.DetailActivity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem> implements Serializable  {
 
     private Context context;
-    private List<Device> devices = new ArrayList<>();
+    private List<Device> devices;
 
     public DeviceAdapter(Context context, List<Device> devices) {
         this.context = context;
@@ -36,6 +37,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem
         devices.addAll(data);
     }
 
+    @NonNull
     @Override
     public DeviceItem onCreateViewHolder(ViewGroup parent, int viewType) {
         return new DeviceItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_devices, parent, false));
@@ -57,6 +59,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem
         TextView deviceName;
         TextView devicePosition;
         TextView deviceDistance;
+        View view;
 
         DeviceItem(@NonNull View view) {
             super(view);
@@ -64,6 +67,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem
             deviceName = view.findViewById(R.id.device_name);
             devicePosition = view.findViewById(R.id.device_position);
             deviceDistance = view.findViewById(R.id.device_distance);
+            this.view = view;
         }
 
         void bind(Device device) {
@@ -74,6 +78,12 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem
             if (null != distance) {
                 deviceDistance.setText("可连接");
             }
+            // bind 监听事件
+            view.setOnClickListener(v -> {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("id", device.getId());
+                context.startActivity(intent);
+            });
         }
     }
 }
