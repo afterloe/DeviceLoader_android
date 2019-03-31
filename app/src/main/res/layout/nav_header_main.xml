@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_nav_icon" />
+        app:srcCompat="@mipmap/server_74px" />
 
     <View
         android:id="@+id/bg_nav_top_bg"
