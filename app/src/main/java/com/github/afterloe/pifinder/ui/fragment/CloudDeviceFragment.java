@@ -55,7 +55,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_devices, container, false);
+        View view = inflater.inflate(R.layout.fragment_cloud_devices, container, false);
         srl_refresh = view.findViewById(R.id.srl_refresh);
         rec_device = view.findViewById(R.id.rec_device);
         fab_top = view.findViewById(R.id.fab_top);
