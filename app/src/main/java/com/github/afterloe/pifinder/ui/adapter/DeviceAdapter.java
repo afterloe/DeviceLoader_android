@@ -71,7 +71,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem
         }
 
         void bind(Device device) {
-            pic.setBackgroundResource(R.drawable.ic_inline);
+            pic.setBackgroundResource(R.drawable.MINIUM_Device_USB_HD_72px);
             devicePosition.setText(device.getPosition());
             deviceName.setText(device.getName());
             Double distance = device.getDistance();

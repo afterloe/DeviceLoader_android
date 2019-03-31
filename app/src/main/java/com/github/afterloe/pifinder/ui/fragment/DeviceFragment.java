@@ -21,7 +21,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class DeviceFragment extends Fragment implements Serializable {
 
-    private final String[] mTitles = {"远程设备列表", "电子地图", "附近设备"};
+    private final String[] mTitles = {"远程设备列表", "附近设备", "巡检历史"};
     private Context context;
     private TabLayout tl_devices;
     private ViewPager vp_content;
