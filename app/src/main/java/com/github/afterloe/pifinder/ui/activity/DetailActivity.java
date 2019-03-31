@@ -135,8 +135,8 @@ public class DetailActivity extends AppCompatActivity implements Serializable {
 
         // 获取数据
         Intent intent = getIntent();
-        Device device = (Device) intent.getSerializableExtra("object");
-        new DetailLoadTask(device.getId()).execute();
+//        Device device = (Device) intent.getSerializableExtra("object");
+//        new DetailLoadTask(device.getId()).execute();
 
         // 设置webView
         webView = findViewById(R.id.webView);

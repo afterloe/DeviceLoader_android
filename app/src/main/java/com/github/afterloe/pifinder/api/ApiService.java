@@ -21,7 +21,7 @@ import retrofit2.http.Query;
 
 public final class ApiService implements Serializable {
 
-    protected static final String BASE_URL = "http://192.168.2.59:8080";
+    protected static final String BASE_URL = "http://192.168.3.3:8080";
 
     private static ApiService instance;
     public DeviceService deviceService;

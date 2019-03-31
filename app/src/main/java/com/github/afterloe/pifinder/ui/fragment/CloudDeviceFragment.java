@@ -59,13 +59,12 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
         srl_refresh = view.findViewById(R.id.srl_refresh);
         rec_device = view.findViewById(R.id.rec_device);
         fab_top = view.findViewById(R.id.fab_top);
-
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        rec_device.setLayoutManager(layoutManager);
         srl_refresh.setOnRefreshListener(() -> {
             curPage = 1;
             fetchCloudDevice(true);  // 拉取远程数据
         });
-        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        rec_device.setLayoutManager(layoutManager);
         // 设置 进度条颜色
         srl_refresh.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
@@ -107,6 +106,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
         subscriptions = new CompositeDisposable();
         data = new ArrayList<>();
         adapter = new DeviceAdapter(getActivity(), data);
+        rec_device.setAdapter(adapter);
         srl_refresh.setRefreshing(true);
         fetchCloudDevice(true);  // 拉取远程数据
     }
