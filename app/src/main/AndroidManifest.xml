@@ -36,10 +36,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Slidr.Slidable" >
         </activity>
-        <!--<activity android:name=".ui.activity.MainListActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.Slidr.Slidable" >-->
-        <!--</activity>-->
     </application>
 
 </manifest>

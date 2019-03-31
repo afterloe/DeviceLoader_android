@@ -14,6 +14,9 @@ import com.r0adkll.slidr.Slidr;
 
 import java.io.Serializable;
 
+/**
+ * 设备详情
+ */
 public class DeviceDetailActivity extends AppCompatActivity implements Serializable {
 
     private Integer deviceId;

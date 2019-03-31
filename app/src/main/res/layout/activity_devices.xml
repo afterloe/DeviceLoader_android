@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activity.MainActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -41,9 +42,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@animator/color_state_menu_navi"
+        app:itemTextColor="@animator/color_state_menu_navi"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
 
