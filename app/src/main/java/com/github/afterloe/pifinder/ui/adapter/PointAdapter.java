@@ -27,6 +27,7 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.PointItem> i
     public void addAll(List<Point> points) {
         this.points.clear();
         this.points.addAll(points);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,7 +43,7 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.PointItem> i
 
     @Override
     public int getItemCount() {
-        return 0;
+        return points.size();
     }
 
     class PointItem extends RecyclerView.ViewHolder {

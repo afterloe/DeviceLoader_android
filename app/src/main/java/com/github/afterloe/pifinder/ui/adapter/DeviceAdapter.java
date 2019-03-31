@@ -44,7 +44,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceItem
     }
 
     @Override
-    public void onBindViewHolder(DeviceItem holder, int position) {
+    public void onBindViewHolder(@NonNull DeviceItem holder, int position) {
         holder.bind(devices.get(position));
     }
 

@@ -31,6 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class DeviceDetailFragment extends Fragment implements Serializable {
 
@@ -97,7 +98,11 @@ public class DeviceDetailFragment extends Fragment implements Serializable {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
                     if (data.getCode().equals(200)) {
-                        adapter.addAll(data.getData());
+                        List<Point> results = data.getData();
+                        adapter.addAll(results);
+                        if (0 == results.size()) {
+                            ToastUtils.longToast(ResUtils.getString(R.string.point_default));
+                        }
                     }
                 }, NetworkUtils::processRequestException);
         subscriptions.add(subscribe);
