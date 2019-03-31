@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.github.afterloe.pifinder.R;
 import com.github.afterloe.pifinder.domain.Device;
-import com.github.afterloe.pifinder.ui.activity.DetailActivity;
 import com.github.afterloe.pifinder.ui.activity.DeviceDetailActivity;
 
 import java.io.Serializable;

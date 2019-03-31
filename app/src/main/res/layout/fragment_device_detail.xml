@@ -76,7 +76,7 @@
         android:layout_marginTop="98dp" >
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rec_point"
+            android:id="@+id/rec_points"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white" />

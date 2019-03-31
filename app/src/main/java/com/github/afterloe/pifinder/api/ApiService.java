@@ -25,6 +25,7 @@ public final class ApiService implements Serializable {
 
     private static ApiService instance;
     public DeviceService deviceService;
+    public PointService pointService;
 
     public static ApiService getInstance() {
         if (instance == null) {
@@ -40,6 +41,7 @@ public final class ApiService implements Serializable {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         deviceService = storeRestAPI.create(DeviceService.class);
+        pointService = storeRestAPI.create(PointService.class);
     }
 }
 

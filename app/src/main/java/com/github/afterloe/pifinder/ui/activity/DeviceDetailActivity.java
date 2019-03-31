@@ -2,6 +2,7 @@ package com.github.afterloe.pifinder.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -45,6 +46,10 @@ public class DeviceDetailActivity extends AppCompatActivity implements Serializa
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> finish());
-        getSupportFragmentManager().beginTransaction().replace(R.id.cly_root, DeviceDetailFragment.newInstance()).commit();
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", deviceId);
+        Fragment fragment = DeviceDetailFragment.newInstance();
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.cly_root, fragment).commit();
     }
 }
