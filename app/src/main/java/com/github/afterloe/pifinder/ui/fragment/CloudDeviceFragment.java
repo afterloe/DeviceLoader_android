@@ -92,7 +92,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
         });
         fab_top.setOnClickListener(v -> {
             LinearLayoutManager manager = (LinearLayoutManager) rec_device.getLayoutManager();
-            if (50 > manager.findFirstVisibleItemPosition()) {
+            if (10 > manager.findFirstVisibleItemPosition()) {
                 rec_device.smoothScrollToPosition(0);
             } else {
                 rec_device.scrollToPosition(0);
@@ -135,8 +135,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
             ViewCompat.animate(fab_top).scaleX(0.0F).scaleY(0.0F).alpha(0.0F)
                     .setInterpolator(INTERPOLATOR).withLayer().setListener(new ViewPropertyAnimatorListener() {
                 @Override
-                public void onAnimationStart(View view) {
-                }
+                public void onAnimationStart(View view) { }
 
                 @SuppressLint("RestrictedApi")
                 @Override
@@ -145,9 +144,7 @@ public class CloudDeviceFragment extends Fragment implements Serializable {
                 }
 
                 @Override
-                public void onAnimationCancel(View view) {
-
-                }
+                public void onAnimationCancel(View view) { }
             }).start();
         }
     }
