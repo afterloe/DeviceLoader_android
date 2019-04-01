@@ -1,31 +1,24 @@
 package com.github.afterloe.pifinder.api;
 
 import com.github.afterloe.pifinder.DataMover;
-import com.github.afterloe.pifinder.domain.Device;
-import com.github.afterloe.pifinder.domain.ResponseObj;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Flowable;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
+/**
+ * 请求API
+ */
 public final class ApiService implements Serializable {
 
-    protected static final String BASE_URL = "http://192.168.3.3:8080";
+    public static final String BASE_URL = "http://192.168.2.58:8080";
 
     private static ApiService instance;
     public DeviceService deviceService;
     public PointService pointService;
+    public TaskService taskService;
 
     public static ApiService getInstance() {
         if (instance == null) {
@@ -42,6 +35,7 @@ public final class ApiService implements Serializable {
                 .build();
         deviceService = storeRestAPI.create(DeviceService.class);
         pointService = storeRestAPI.create(PointService.class);
+        taskService = storeRestAPI.create(TaskService.class);
     }
 }
 

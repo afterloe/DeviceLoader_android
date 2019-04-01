@@ -11,8 +11,6 @@ import retrofit2.http.Path;
 
 public interface PointService {
 
-   String BASE_URL = "http://192.168.3.3:8080";
-
-    @GET(BASE_URL + "/v1/point/{id}")
+    @GET(ApiService.BASE_URL + "/v1/point/{id}")
     Flowable<ResponseObj<List<Point>>> fetchPoints(@Path("id") Integer id);
 }

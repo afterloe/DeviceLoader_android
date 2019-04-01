@@ -13,6 +13,7 @@
     <string name="device_distance_default">超出连接范围</string>
     <string name="title_device_detail">设备详情</string>
     <string name="point_default">此设备暂无数据接入端口</string>
+    <string name="task_default">暂无巡检任务</string>
 
     <string name="next_one">下一个</string>
     <string name="previous_one">上一个</string>
