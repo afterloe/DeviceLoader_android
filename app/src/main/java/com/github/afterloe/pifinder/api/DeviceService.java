@@ -12,11 +12,10 @@ import retrofit2.http.Query;
 
 public interface DeviceService {
 
-   String BASE_URL = "http://192.168.3.3:8080";
 
-    @GET(BASE_URL + "/v2/list")
+    @GET(ApiService.BASE_URL + "/v2/list")
     Flowable<ResponseObj<List<Device>>> fetchDevices(@Query("bg") Integer bg, @Query("ed") Integer ed);
 
-    @GET(BASE_URL + "/v1/device/{id}")
+    @GET(ApiService.BASE_URL + "/v1/device/{id}")
     Flowable<ResponseObj<Device>> fetchDevicde(@Path("id") Integer id);
 }
